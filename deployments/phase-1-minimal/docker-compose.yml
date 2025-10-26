@@ -1,0 +1,52 @@
+version: '3.8'
+
+services:
+  # Local LLM (Ollama)
+  # Always accessible at: http://ollama:11434 (from containers) or http://localhost:11434 (from host)
+  ollama:
+    image: ollama/ollama:latest
+    container_name: sme-ollama
+    ports:
+      - "11434:11434"  # Fixed port for consistent access
+    volumes:
+      - ollama-data:/root/.ollama
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "ollama", "list"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    networks:
+      - sme-network
+
+  # Web UI Chatbot (Streamlit)
+  chatbot:
+    build: ./chatbot-ui
+    container_name: sme-chatbot
+    ports:
+      - "8080:8080"
+    environment:
+      # STANDARDIZED: Use Docker service name for inter-container communication
+      # This ensures the connection always works regardless of IP address changes
+      - OLLAMA_URL=http://ollama:11434
+      - MODEL_NAME=llama3.2:1b
+      - STREAMLIT_SERVER_PORT=8080
+      - STREAMLIT_SERVER_ADDRESS=0.0.0.0
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    depends_on:
+      ollama:
+        condition: service_healthy
+    restart: unless-stopped
+    networks:
+      - sme-network
+
+# Define a custom network for reliable service discovery
+networks:
+  sme-network:
+    driver: bridge
+
+volumes:
+  ollama-data:
+    driver: local
