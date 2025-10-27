@@ -84,32 +84,43 @@
 
 ## Phased Approach
 
-### Phase 1: Chatbot (Start Here) ⭐
+### Phase 1: Chatbot (Start Here) ⭐ **[AVAILABLE NOW]**
 Simple chatbot with Ollama. Chat history, natural language interface.
 
 **Components**: Ollama + Web UI
 **Time to deploy**: 5 minutes
+**Recommended model**: `llama3.2:1b` (fast, good for testing)
 **Use case**: Get familiar with local LLM
 
 [→ Phase 1 Guide](docs/phase-1-chatbot.md)
 
-### Phase 2: RAG Search
-Add Retrieval Augmented Generation. Chatbot can search your markdown files.
+---
 
-**Components**: Phase 1 + RAG search
+### Phase 2: RAG Search **[IN DEVELOPMENT]**
+Add Retrieval Augmented Generation. Chatbot can search your markdown files using vector database.
+
+**Components**: Phase 1 + ChromaDB (vector search)
 **Time to deploy**: +10 minutes
+**Recommended model**: `llama3.2:1b` or `llama3.2:3b` (vector DB handles memory/search)
 **Use case**: "What did we discuss with Acme about PostgreSQL?"
 
-[→ Phase 2 Guide](docs/phase-2-rag.md)
+**Note**: LLM encodes text to embeddings; ChromaDB handles search/retrieval.
 
-### Phase 3: Knowledge Graph (Advanced)
-Full knowledge graph with Neo4j, MCP server, structured knowledge capture.
+[→ Phase 2 Guide](docs/phase-2-rag.md) *(Coming Soon)*
+
+---
+
+### Phase 3: Knowledge Graph **[PLANNED]**
+Full knowledge graph with Neo4j, MCP server, structured relationship mapping.
 
 **Components**: Phase 2 + Neo4j + MCP
 **Time to deploy**: +30 minutes
-**Use case**: Complex queries, graph analytics, agentic workflows
+**Recommended model**: `llama3.1:8b` (better for MCP tool calling, if using agentic workflows)
+**Use case**: Complex queries, relationship intelligence, graph analytics
 
-[→ Phase 3 Guide](docs/phase-3-knowledge-graph.md)
+**Note**: Neo4j stores relationships; LLM generates queries and interprets results.
+
+[→ Phase 3 Guide](docs/phase-3-knowledge-graph.md) *(Coming Soon)*
 
 ## Quick Start (Phase 1)
 
@@ -172,7 +183,7 @@ docker compose up -d --build chatbot
            │
 ┌──────────▼──────────────────┐
 │  Ollama (localhost:11434)   │
-│  - Local LLM (llama3.2)     │
+│  - Local LLM (llama3.2:1b)  │
 │  - No cloud, 100% private   │
 └─────────────────────────────┘
 ```
@@ -267,21 +278,31 @@ docker compose down
 
 ## Roadmap
 
-### Completed ✅
-- [x] **Phase 1**: Chatbot (Ollama + Streamlit)
-- [x] **Standardized Docker Configuration** (No more hardcoded IPs!)
-- [x] **Model Management** (Easy model switching)
-- [x] **Teaching Materials** (Docker DNS, Configuration)
+### ✅ Phase 1: Available Now
+- [x] Local AI chatbot (Ollama + Streamlit)
+- [x] Standardized Docker configuration
+- [x] Model management system (switch between models easily)
+- [x] Comprehensive documentation (Docker DNS, Model Management, Configuration)
+- [x] Works with `llama3.2:1b` (fast, good for testing)
 
-### In Progress 🚧
-- [ ] Phase 2: RAG search (markdown files)
-- [ ] Phase 1 Documentation (Setup guide, videos)
+### 🚧 Phase 2: In Development
+- [ ] RAG search with ChromaDB vector database
+- [ ] Markdown file indexing and retrieval
+- [ ] Source citation in responses
+- [ ] Works with `llama3.2:1b` or `llama3.2:3b` (vector DB handles memory)
 
-### Planned 📋
-- [ ] Phase 3: Neo4j knowledge graph
-- [ ] Phase 4: MCP server (AI agent integration)
-- [ ] Phase 5: n8n workflows (CRM/CMDB sync)
-- [ ] Phase 6: Agentic workflows (CrewAI, LangGraph)
+### 📋 Phase 3: Planned
+- [ ] Neo4j knowledge graph (relationship mapping)
+- [ ] MCP server integration (AI agent access to graph)
+- [ ] Multi-perspective context queries
+- [ ] Relationship intelligence analytics
+- [ ] Recommended: `llama3.1:8b` for agentic workflows
+
+### 🔮 Future Phases
+- [ ] n8n workflows (CRM/CMDB sync automation)
+- [ ] CrewAI/LangGraph agentic workflows
+- [ ] Multi-agent collaboration
+- [ ] Enterprise integrations (Salesforce, ServiceNow, etc.)
 
 ## Contributing
 
