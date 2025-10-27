@@ -2,6 +2,8 @@
 
 **Turn scattered information into context-aware intelligence that drives better business decisions**
 
+![SME Knowledge Graph - Local AI Chatbot Demo](docs/images/chatbot-demo.jpg)
+
 100% on-premise. Zero cloud dependencies. Supplements your existing tools.
 
 ---
