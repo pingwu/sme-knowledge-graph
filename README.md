@@ -82,43 +82,96 @@
 - **Small team (5-10)** → Share context across functions, align on priorities
 - **Department/Enterprise** → Cross-functional relationship intelligence, strategic decision support
 
-## Phased Approach
+## Phased Approach - Progressive Learning Path
 
-### Phase 1: Chatbot (Start Here) ⭐ **[AVAILABLE NOW]**
-Simple chatbot with Ollama. Chat history, natural language interface.
+Each phase is a complete, working system. You can **stop at any phase** or restart from any phase if lost.
+
+### Phase 1: **"Local LLM Infrastructure"** ⭐ **[AVAILABLE NOW]**
+**Subtitle:** *Foundation - Deploy Private AI on Your Machine*
+
+Deploy a fully functional local AI chatbot with zero cloud dependencies. Learn Docker container orchestration, local LLM deployment (Ollama), and basic conversational AI interfaces.
+
+**What You'll Learn:**
+- Docker container orchestration and service health checks
+- Local LLM deployment and model management (Ollama)
+- Basic chatbot UI development (Streamlit)
+- Environment configuration for AI systems
+- Privacy-first AI architecture (100% local, no cloud)
 
 **Components**: Ollama + Web UI
 **Time to deploy**: 5 minutes
 **Recommended model**: `llama3.2:1b` (fast, good for testing)
-**Use case**: Get familiar with local LLM
+**Use case**: General-purpose private chatbot for conversations
+
+**Can Stop Here?** ✅ Yes - You have a functional private chatbot for general questions
 
 [→ Phase 1 Guide](docs/phase-1-chatbot.md)
 
 ---
 
-### Phase 2: RAG Search **[IN DEVELOPMENT]**
-Add Retrieval Augmented Generation. Chatbot can search your markdown files using vector database.
+### Phase 2: **"Semantic Search & RAG"** **[IN DEVELOPMENT]**
+**Subtitle:** *Intelligence - Teach AI About YOUR Knowledge*
+
+![SME Knowledge Graph - RAG Demo](docs/images/phase-2-screenshot.jpg)
+
+Add Retrieval Augmented Generation (RAG) to search your markdown knowledge vault. Learn vector embeddings, semantic search, and how AI can understand meaning instead of just matching keywords.
+
+**What You'll Learn:**
+- Vector embeddings (what they are, why they matter for AI)
+- Semantic search vs. keyword search (SEO → GEO industry shift)
+- RAG (Retrieval Augmented Generation) architecture
+- ChromaDB vector database deployment and management
+- Document chunking and indexing strategies
+- Source citation and verifiable AI responses
+
+**What's New vs. Phase 1:**
+- **Phase 1:** General knowledge chatbot (LLM training data only)
+- **Phase 2:** Personal knowledge chatbot (LLM + YOUR documents via RAG)
+- **Technology Add:** ChromaDB vector database
+- **Capability Add:** Search your knowledge vault, cite sources
 
 **Components**: Phase 1 + ChromaDB (vector search)
 **Time to deploy**: +10 minutes
 **Recommended model**: `llama3.2:1b` or `llama3.2:3b` (vector DB handles memory/search)
-**Use case**: "What did we discuss with Acme about PostgreSQL?"
+**Use case**: "What did we discuss with Acme about PostgreSQL?" (with source citations)
 
 **Note**: LLM encodes text to embeddings; ChromaDB handles search/retrieval.
 
+**Can Stop Here?** ✅ Yes - You have a functional personal knowledge assistant with source citations
+
 [→ Phase 2 Guide](docs/phase-2-rag.md) *(Coming Soon)*
+[→ Phase 2 PRD](docs/phase-2-rag-PRD.md) - Product Requirements
+[→ Architecture: Why Vector Databases?](docs/ARCHITECTURE-VECTOR-DATABASES-AND-GEO.md) - Deep dive into semantic search
 
 ---
 
-### Phase 3: Knowledge Graph **[PLANNED]**
-Full knowledge graph with Neo4j, MCP server, structured relationship mapping.
+### Phase 3: **"Knowledge Graph & Relationships"** **[PLANNED]**
+**Subtitle:** *Context - Map How Ideas Connect*
+
+Build a full knowledge graph that understands relationships between entities (people, companies, decisions, technologies). Learn graph databases, relationship mapping, and how AI can traverse connections to provide multi-perspective context.
+
+**What You'll Learn:**
+- Graph databases (Neo4j) and relationship modeling
+- Entity extraction and relationship mapping
+- MCP (Model Context Protocol) for AI agent tool access
+- Multi-perspective context queries
+- Graph traversal for decision intelligence
+- Relationship capital and strategic intelligence
+
+**What's New vs. Phase 2:**
+- **Phase 2:** Finds relevant documents (similarity search)
+- **Phase 3:** Understands relationships between entities (graph traversal)
+- **Example Phase 2:** "Find docs about PostgreSQL decision"
+- **Example Phase 3:** "Why PostgreSQL? Show relationship: Customer requirement → Compliance need → Database choice → Team expertise → Implementation success"
 
 **Components**: Phase 2 + Neo4j + MCP
 **Time to deploy**: +30 minutes
 **Recommended model**: `llama3.1:8b` (better for MCP tool calling, if using agentic workflows)
-**Use case**: Complex queries, relationship intelligence, graph analytics
+**Use case**: Complex queries, relationship intelligence, graph analytics, multi-stakeholder context
 
 **Note**: Neo4j stores relationships; LLM generates queries and interprets results.
+
+**Can Stop Here?** ✅ Yes - You have a complete enterprise knowledge intelligence system
 
 [→ Phase 3 Guide](docs/phase-3-knowledge-graph.md) *(Coming Soon)*
 

@@ -1,0 +1,80 @@
+version: '3.8'
+
+services:
+  # Local LLM (Ollama)
+  # Always accessible at: http://ollama:11434 (from containers) or http://localhost:11434 (from host)
+  ollama:
+    image: ollama/ollama:latest
+    container_name: sme-ollama-phase2
+    ports:
+      - "11434:11434"  # Fixed port for consistent access
+    volumes:
+      - ollama-data:/root/.ollama
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "ollama", "list"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    networks:
+      - sme-network
+
+  # ChromaDB Vector Database (NEW for Phase 2)
+  # Provides semantic search capabilities via vector embeddings
+  chromadb:
+    image: chromadb/chroma:0.4.22
+    command: sh -c "pip install 'numpy<2.0' && uvicorn chromadb.app:app --host 0.0.0.0 --port 8000"
+
+    container_name: sme-chromadb-phase2
+    ports:
+      - "8000:8000"
+    volumes:
+      - chromadb-data:/chroma/chroma
+      - ./knowledge-vault:/knowledge-vault:ro  # Mount knowledge vault as read-only
+    environment:
+      - IS_PERSISTENT=TRUE
+      - ANONYMIZED_TELEMETRY=FALSE
+    restart: unless-stopped
+    networks:
+      - sme-network
+
+  # Web UI Chatbot (Streamlit) - Enhanced with RAG
+  chatbot:
+    build: ./chatbot-ui
+    container_name: sme-chatbot-phase2
+    ports:
+      - "8080:8080"
+    environment:
+      # STANDARDIZED: Use Docker service name for inter-container communication
+      # This ensures the connection always works regardless of IP address changes
+      - OLLAMA_URL=http://ollama:11434
+      - MODEL_NAME=llama3.2:1b
+      - STREAMLIT_SERVER_PORT=8080
+      - STREAMLIT_SERVER_ADDRESS=0.0.0.0
+      # NEW Phase 2 environment variables
+      - CHROMADB_URL=http://chromadb:8000
+      - EMBEDDING_MODEL=nomic-embed-text
+      - ENABLE_RAG=true
+      - KNOWLEDGE_VAULT_PATH=/knowledge-vault
+    volumes:
+      - ./knowledge-vault:/knowledge-vault:ro  # Mount knowledge vault as read-only
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    depends_on:
+      - ollama
+      - chromadb
+    restart: unless-stopped
+    networks:
+      - sme-network
+
+# Define a custom network for reliable service discovery
+networks:
+  sme-network:
+    driver: bridge
+
+volumes:
+  ollama-data:
+    driver: local
+  chromadb-data:
+    driver: local
